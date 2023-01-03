@@ -9,7 +9,7 @@ let menuItems = [
   'Music',
   'Log Out'
 ];
-function menuMaker(linksArray) {
+/*function menuMaker(linksArray) {
   const menuWrapper = document.createElement('div');
   const menuList = document.createElement('ul');
 
@@ -27,13 +27,16 @@ function menuMaker(linksArray) {
   hamMenu.addEventListener('click', () => {
     menuWrapper.classList.toggle('menu--open');
   })
+  
+
 
 
 
   return menuWrapper;
 }
 
-document.querySelector('.header').appendChild(menuMaker(menuItems));
+document.querySelector('.header').innerHTML += menuMaker(menuItems).outerHTML;
+
 /*
   Step 1: Write a component called 'menuMaker' to create a menu like the markup below: 
 
@@ -56,3 +59,35 @@ document.querySelector('.header').appendChild(menuMaker(menuItems));
 
   Step 6: Use 'menuMaker' to create a menu using the 'menuItems' array, and append the returned menu to the header.
 */
+function menuMaker(menuItems) {
+  // Step 1: Create the menu container element
+  const menuContainer = document.createElement('div');
+  menuContainer.classList.add('menu');
+
+  // Step 2: Create the list element and add the menu items
+  const menuList = document.createElement('ul');
+  menuItems.forEach(item => {
+    const menuItem = document.createElement('li');
+    menuItem.textContent = item;
+    menuList.appendChild(menuItem);
+  });
+
+  // Step 3: Select the menu button element
+  const menuButton = document.querySelector('.menu-button');
+
+  // Step 4: Add a click event listener to the menu button
+  menuButton.addEventListener('click', () => {
+    menuContainer.classList.toggle('menu--open');
+  });
+
+  // Step 5: Append the list to the menu container and return the menu container
+  menuContainer.appendChild(menuList);
+  return menuContainer;
+}
+
+// Step 6: Use the menuMaker function to create a menu using the menuItems array
+const menu = menuMaker(menuItems);
+
+// Step 7: Append the menu to the header element
+const header = document.querySelector('header');
+header.appendChild(menu);
